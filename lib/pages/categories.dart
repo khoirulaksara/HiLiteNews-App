@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import '../fragments/sections/sections.dart';
+import '../fragments/sections/tags.dart';
+import '../models/colors.dart';
+
+class CategoriesView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: MyColors.blue(),
+          bottom: TabBar(
+            indicatorColor: MyColors.yellow(),
+            tabs: [
+              Tab(text: "Sections"),
+              Tab(text: "Tags"),
+            ],
+          ),
+          title: Text('HiLite Newspaper', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),),
+        ),
+        body: TabBarView(
+          children: [
+            new Sections(),
+            new Tags(),
+          ],
+        ),
+      ),
+    );
+  }
+}
