@@ -6,10 +6,9 @@ import '../../models/colors.dart';
 import 'stories.dart';
 
 class Search extends StatelessWidget {
-  ScrollController controller = new ScrollController();
+  final ScrollController controller = new ScrollController();
 
   Stories list;
-  Iterable<StoryModel> stories;
   
   Search() {
     list = new Stories(null, null, " ");
@@ -17,9 +16,13 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Material(
-      color: Colors.white,
-      child: new Column(
+    return new Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: MyColors.blue(),
+        title: Text('Search', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),),
+      ),
+      body: new Column(
         children: <Widget>[
           new Container(
             margin: EdgeInsets.all(10.0),
@@ -29,14 +32,12 @@ class Search extends StatelessWidget {
                 list.scrollUp();
               },
               style: TextStyle(color: Colors.white),
-
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 fillColor: MyColors.blue(),
                 filled: true,
                 hintText: "Search",
                 hintStyle: TextStyle(color: Colors.white),
-
               ),
             ),
           ),

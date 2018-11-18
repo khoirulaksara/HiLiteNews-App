@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../fragments/sections/sections.dart';
-import '../fragments/sections/tags.dart';
+import '../fragments/categories/sections.dart';
+import '../fragments/categories/tags.dart';
 import '../models/colors.dart';
 
 class CategoriesView extends StatelessWidget {
@@ -21,7 +21,7 @@ class CategoriesView extends StatelessWidget {
               Tab(text: "Tags"),
             ],
           ),
-          title: Text('HiLite Newspaper', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),),
+          title: Text('Categories', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),),
         ),
         body: TabBarView(
           children: [

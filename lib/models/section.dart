@@ -12,7 +12,6 @@ class SectionModel {
   bool saved;
 
   static List<SectionModel> baseSections = [
-    new SectionModel("Top Story", "topstory-2", 0),
     new SectionModel("News", "news", 0),
     new SectionModel("Feature", "feature", 0),
     new SectionModel("Student Section", "student-section", 0),

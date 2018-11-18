@@ -11,7 +11,7 @@ class VideosView extends StatelessWidget {
     return new Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.blue(),
-        title: Text('HiLite Newspaper', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),),
+        title: Text('Videos', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),),
       ),
       body: new Videos()
     );

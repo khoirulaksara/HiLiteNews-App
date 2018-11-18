@@ -18,7 +18,7 @@ class Stories extends StatefulWidget {
 
     void updateQuery(String query) {
       state.query = query;
-      state.getData();
+      state.search();
     }
 
     void scrollUp() {
@@ -61,13 +61,12 @@ class StoriesState extends State<Stories> {
       }
     });
 
-    // webview.close();
+    super.initState();
   }
   
 
    @override
   void dispose() {
-    // webview.dispose();
     controller.dispose();
     super.dispose();
   }
@@ -78,6 +77,16 @@ class StoriesState extends State<Stories> {
       this.setState(() {
         moreStories = stories.length >= 10;
         this.stories.addAll(stories);
+      });
+    }
+  }
+
+  Future<void> search() async {
+    Iterable<StoryModel> stories = await new StoriesAPI().getData(category, tag, query, page);
+    if (this.mounted) {
+      this.setState(() {
+        moreStories = stories.length >= 10;
+        this.stories = stories.toList();
       });
     }
   }

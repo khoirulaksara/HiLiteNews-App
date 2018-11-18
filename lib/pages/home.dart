@@ -7,6 +7,7 @@ import '../models/colors.dart';
 import '../models/database.dart';
 import '../models/section.dart';
 import '../models/tag.dart';
+import '../fragments/stories/categories-list.dart';
 
 class HomeView extends StatefulWidget {
 
@@ -14,25 +15,43 @@ class HomeView extends StatefulWidget {
   HomeViewState createState() => new HomeViewState();
 }
 
-class HomeViewState extends State<HomeView> {
+class HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   List<Widget> children = [
-    new Search(),
-    new Stories(null, null, null)
+    new Stories(null, null, null),
+    new Stories('topstory-2', null, null)
   ];
 
   List<Tab> tabs = [
-    Tab(icon: Icon(Icons.search)),
     Tab(text: 'All',),
+    Tab(text: 'Top Story',),
   ];
+
+  TabController controller;
   
   bool areSectionsFinished = false;
   bool areTagsFinished = false;
 
   @override
   void initState() {
-    fillSections().whenComplete(() {areSectionsFinished = true;});
-    fillTags().whenComplete(() {areTagsFinished = true;}); 
+    controller = new TabController(
+      length: tabs.length,
+      vsync: this,
+    );
+    fillSections().whenComplete(() {
+      areSectionsFinished = true;
+      controller = new TabController(
+        length: tabs.length,
+        vsync: this,
+      );
+    });
+    fillTags().whenComplete(() {
+      areTagsFinished = true;
+      controller = new TabController(
+        length: tabs.length,
+        vsync: this
+      );
+    }); 
     super.initState();
   }
 
@@ -60,28 +79,48 @@ class HomeViewState extends State<HomeView> {
     });
   }
 
+  void launchCategories() async {
+    final index = await Navigator.push(context, new MaterialPageRoute(builder: (context) => new CategoriesList(tabs)));
+    print(index);
+    if (index != null) {
+      controller.animateTo(int.parse(index.toString()));
+    }
+  }
+
+  void launchSearch() {
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new Search()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return !areSectionsFinished || !areTagsFinished ? 
       new Center(
         child: new CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(MyColors.yellow())),
       ) :
-      new DefaultTabController(
-        initialIndex: 1,
-        length: tabs.length,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: MyColors.blue(),
-            bottom: new TabBar(
-              indicatorColor: MyColors.yellow(),
-              tabs: tabs, 
-              isScrollable: true,
+      new Scaffold(
+        appBar: AppBar(
+          backgroundColor: MyColors.blue(),
+          actions: <Widget>[
+            new IconButton(
+              icon: Icon(Icons.list),
+              onPressed: launchCategories,
             ),
-            title: Text('HiLite Newspaper', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),),
+            new IconButton(
+              icon: Icon(Icons.search),
+              onPressed: launchSearch,
+            )
+          ],
+          bottom: new TabBar(
+            controller: controller,
+            indicatorColor: MyColors.yellow(),
+            tabs: tabs, 
+            isScrollable: true,
           ),
-          body: TabBarView(
-            children: children
-          ),
+          title: Text('HiLite Newspaper', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5),),
+        ),
+        body: TabBarView(
+          controller: controller,
+          children: children
         ),
       );
   }
