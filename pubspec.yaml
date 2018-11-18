@@ -21,7 +21,7 @@ dependencies:
   html2md:
 
   # showing actual story using webview
-  flutter_webview_plugin: 
+  flutter_webview_plugin: ^0.3.0
 
   # for sharing stories in webview
   share:
