@@ -17,7 +17,9 @@ class Stories extends StatefulWidget {
     Stories(this.category, this.tag, this.query);
 
     void updateQuery(String query) {
+      print(query);
       state.query = query;
+      state.page = 1;
       state.search();
     }
 
