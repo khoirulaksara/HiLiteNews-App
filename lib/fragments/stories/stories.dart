@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import '../../api/stories.dart';
 import '../../models/story.dart';
 import '../../models/colors.dart';
 import './story.dart';
 import '../loader.dart';
+import './webview.dart';
 
 class Stories extends StatefulWidget {
     final String category;
@@ -50,6 +50,8 @@ class StoriesState extends State<Stories> {
 
   @override
   void initState() {
+    Webview.setStories(this);
+
     if (stories == null || stories.length == 0) {
       getData();
     }
@@ -64,7 +66,6 @@ class StoriesState extends State<Stories> {
     super.initState();
   }
   
-
    @override
   void dispose() {
     controller.dispose();
@@ -95,7 +96,6 @@ class StoriesState extends State<Stories> {
     controller.jumpTo(0.0);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return new Material(
@@ -105,7 +105,7 @@ class StoriesState extends State<Stories> {
         controller: controller,
         itemBuilder: (BuildContext context, int index) {
           if (index < (stories == null ? 0  : stories.length)) {
-            return new Story(stories.elementAt(index));
+            return new Story(stories.elementAt(index), index);
           } else if (moreStories) {
             return new Loader();
           } else {

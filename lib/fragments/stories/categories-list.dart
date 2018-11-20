@@ -49,7 +49,11 @@ class CategoriesListState extends State<CategoriesList> {
                   },
                   child: new Text(
                     categories.elementAt(index),
-                    style: TextStyle(color: Colors.black, fontSize: 20.0),
+                    style: TextStyle(
+                      color: Colors.black, 
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
                 )
               ),

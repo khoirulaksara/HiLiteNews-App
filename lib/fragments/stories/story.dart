@@ -9,8 +9,9 @@ import 'webview.dart';
 
 class Story extends StatelessWidget {
   StoryModel story;
+  int index;
 
-  Story(this.story);
+  Story(this.story, this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class Story extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => new Webview(story)),
+          MaterialPageRoute(builder: (context) => new Webview(story, index)),
         );
       },
 

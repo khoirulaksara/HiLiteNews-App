@@ -19,12 +19,12 @@ class HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   List<Widget> children = [
     new Stories(null, null, null),
-    new Stories('topstory-2', null, null)
+    // new Stories('topstory-2', null, null)
   ];
 
   List<Tab> tabs = [
     Tab(text: 'All',),
-    Tab(text: 'Top Story',),
+    // Tab(text: 'Top Story',),
   ];
 
   TabController controller;
@@ -81,7 +81,6 @@ class HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   void launchCategories() async {
     final index = await Navigator.push(context, new MaterialPageRoute(builder: (context) => new CategoriesList(tabs)));
-    print(index);
     if (index != null) {
       controller.animateTo(int.parse(index.toString()));
     }
